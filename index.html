@@ -260,9 +260,8 @@ tbody tr:hover td{background:rgba(255,255,255,.025)}
 </main>
 
 <footer class="footer">
-  ⚽ DIMO FC Dashboard ⚽
-  <!-- &nbsp;·&nbsp; -->
-  <!-- <a href="https://docs.google.com/spreadsheets/d/1lw8_DGDWDezkbIO78YNLpgZ8viM0j-7qa6n_XIlOFGQ" target="_blank">Google Sheets</a> -->
+  ⚽ DIMO FC Dashboard &nbsp;·&nbsp;
+  <a href="https://docs.google.com/spreadsheets/d/1lw8_DGDWDezkbIO78YNLpgZ8viM0j-7qa6n_XIlOFGQ" target="_blank">Google Sheets</a>
 </footer>
 
 <script>
@@ -731,8 +730,8 @@ function renderThuChi(){
       </div>
     </div>
 
-    <!-- QUỸ ĐỘI -->
-    <div class="sec-title">QUỸ ĐỘI — ${currentYear}</div>
+    <!-- QUỸ ĐỘI TỪNG NGƯỜI -->
+    <div class="sec-title">QUỸ ĐỘI TỪNG NGƯỜI — ${currentYear}</div>
     <div class="table-wrap" style="margin-bottom:8px">
       <table id="quy-doi-table">
         <thead>
@@ -774,7 +773,7 @@ function renderThuChi(){
         </tbody>
         <tfoot>
           <tr style="background:var(--bg3)">
-            <td colspan="7" style="font-weight:700;color:var(--muted2)">TỔNG THU</td>
+            <td colspan="7" style="font-weight:700;color:var(--muted2)">TỔNG</td>
             <td style="font-weight:700;color:var(--green)">${vnd(tongThu)}</td>
             <td style="font-weight:700;color:var(--red)">${vnd(chiTotal)}</td>
             <td style="font-weight:700;color:${conLai>=0?'var(--green)':'var(--red)'}">${vnd(conLai)}</td>
@@ -1160,21 +1159,61 @@ function renderDongQuy(){
       </div>
     </div>
 
-    <div class="sec-title">DANH SÁCH ÂM QUỸ — ${currentYear}</div>
-    <div class="card" style="margin-bottom:28px">
-      ${amList.map((m, i) => `
-        <div class="prow">
-          <div style="font-size:11px;color:var(--muted);width:24px;flex-shrink:0">${i+1}</div>
-          <div class="prow-name" style="width:100px" title="${m.ten}">${m.ten}</div>
-          <div class="prow-bar-bg">
-            <div class="prow-bar-fill r" style="width:${Math.abs(m.so)/maxAm*100}%"></div>
-          </div>
-          <div class="prow-val neg">${vnd(m.so)}</div>
-        </div>`).join('')}
+    <!-- 3 CARD CÙNG 1 HÀNG -->
+    <div class="grid3" style="margin-bottom:28px">
+
+      <!-- DANH SÁCH ÂM QUỸ -->
+      <div class="card">
+        <div class="card-title">🔴 DANH SÁCH ÂM QUỸ — ${currentYear}</div>
+        ${amList.map((m, i) => `
+          <div ${i >= 5 ? 'class="am-quy-extra" style="display:none"' : ''}>
+            <div class="prow">
+              <div style="font-size:11px;color:var(--muted);width:20px;flex-shrink:0">${i+1}</div>
+              <div class="prow-name" style="width:90px" title="${m.ten}">${m.ten}</div>
+              <div class="prow-bar-bg"><div class="prow-bar-fill r" style="width:${Math.abs(m.so)/maxAm*100}%"></div></div>
+              <div class="prow-val neg" style="width:90px">${vnd(m.so)}</div>
+            </div>
+          </div>`).join('')}
+        ${amList.length > 5 ? `
+        <div style="text-align:center;margin-top:10px">
+          <button id="am-quy-btn" onclick="toggleTable('am-quy')"
+            style="padding:5px 16px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--muted2);font-size:11px;cursor:pointer">
+            Xem thêm ${amList.length - 5} người ▾
+          </button>
+        </div>` : ''}
+      </div>
+
+      <!-- TÀI KHOẢN QUỸ -->
+      <div class="card" style="text-align:center">
+        <div class="card-title" style="color:var(--yellow)">🏦 TÀI KHOẢN QUỸ</div>
+        <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px">61609091989</div>
+        <div style="font-size:13px;color:var(--muted2);margin-bottom:14px">VÕ ĐỨC ANH — TPBank</div>
+        <img src="https://raw.githubusercontent.com/anhiniesta9989/dimo-fc/main/QRQuy.png"
+          alt="QR Code TPBank"
+          style="width:100%;max-width:200px;border-radius:12px;border:2px solid var(--border2)">
+      </div>
+
+      <!-- LƯU Ý -->
+      <div class="card">
+        <div class="card-title" style="color:var(--yellow)">📌 LƯU Ý</div>
+        <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
+          <span style="font-size:16px;flex-shrink:0">🧤</span>
+          <span style="font-size:13px;color:var(--muted2);line-height:1.6">Free cho tất cả thủ môn (trừ các trận livestream &amp; ăn nhậu)</span>
+        </div>
+        <div style="padding-top:14px">
+          <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Lịch đóng quỹ</div>
+          ${[['Quý I','1/1 – 31/3'],['Quý II','1/4 – 30/6'],['Quý III','1/7 – 30/9'],['Quý IV','1/10 – 31/12']].map(([q,r])=>`
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)">
+              <span style="font-size:13px;font-weight:600;color:var(--text)">${q}</span>
+              <span style="font-size:12px;color:var(--muted2)">${r}</span>
+            </div>`).join('')}
+        </div>
+      </div>
+
     </div>
 
     <div class="sec-title">CHI TIẾT ĐÓNG QUỸ TỪNG NGƯỜI — ${currentYear}</div>
-    <div class="table-wrap">
+    <div class="table-wrap" style="margin-bottom:8px">
       <table>
         <thead>
           <tr>
@@ -1187,15 +1226,26 @@ function renderDongQuy(){
           </tr>
         </thead>
         <tbody>
-          ${chiTiet.map((r, i) => `
-            <tr>
-              <td style="color:var(--muted);font-size:11px">${i+1}</td>
-              <td style="color:var(--muted2);font-size:12px">📅 ${r.ngay}</td>
-              <td style="font-weight:600">${r.ten}</td>
-              <td style="color:var(--green);font-weight:600">${vnd(r.so)}</td>
-              <td style="color:var(--muted2)">Q${r.quy||'—'}</td>
-              <td style="color:var(--muted2);font-size:12px">${r.note||'—'}</td>
-            </tr>`).join('')}
+          ${(() => {
+            // Parse ngày "5 Jan" hoặc "3 Mar" → sort mới nhất lên đầu
+            const MONTHS = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+            function parseDate(s) {
+              if (!s) return 0;
+              const p = s.trim().split(' ');
+              if (p.length < 2) return 0;
+              return new Date(currentYear, MONTHS[p[1]]||0, parseInt(p[0])||1).getTime();
+            }
+            const sorted = [...chiTiet].sort((a,b) => parseDate(b.ngay) - parseDate(a.ngay));
+            return sorted.map((r, i) => `
+              <tr ${i >= 5 ? 'class="chi-tiet-extra" style="display:none"' : ''}>
+                <td style="color:var(--muted);font-size:11px">${i+1}</td>
+                <td style="color:var(--muted2);font-size:12px">📅 ${r.ngay}</td>
+                <td style="font-weight:600">${r.ten}</td>
+                <td style="color:var(--green);font-weight:600">${vnd(r.so)}</td>
+                <td style="color:var(--muted2)">Q${r.quy||'—'}</td>
+                <td style="color:var(--muted2);font-size:12px">${r.note||'—'}</td>
+              </tr>`).join('');
+          })()}
         </tbody>
         <tfoot>
           <tr style="background:var(--bg3)">
@@ -1205,7 +1255,14 @@ function renderDongQuy(){
           </tr>
         </tfoot>
       </table>
-    </div>`;
+    </div>
+    ${chiTiet.length > 5 ? `
+    <div style="text-align:center;margin-bottom:28px">
+      <button id="chi-tiet-btn" onclick="toggleTable('chi-tiet')"
+        style="padding:7px 20px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--muted2);font-size:12px;cursor:pointer">
+        Xem thêm ${chiTiet.length - 5} lần đóng ▾
+      </button>
+    </div>` : ''}`;
 }
 
 // ─── BOOT ──────────────────────────────────────
