@@ -18,14 +18,14 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Verdana',Geneva,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body{font-family:'Tahoma',Geneva,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 button{cursor:pointer;font-family:inherit}
 
 /* HEADER */
 .header{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:14px 28px;background:rgba(8,11,14,.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
 .logo{display:flex;align-items:center;gap:14px}
 .logo-icon{width:44px;height:44px;border-radius:11px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.logo-name{font-family:'Verdana',Geneva,sans-serif;font-size:28px;letter-spacing:3px;line-height:1}
+.logo-name{font-family:'Tahoma',Geneva,sans-serif;font-size:28px;letter-spacing:3px;line-height:1}
 .logo-sub{font-size:11px;color:var(--muted2);letter-spacing:1.5px;text-transform:uppercase;margin-top:2px}
 .year-group{display:flex;align-items:center;gap:8px}
 .year-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
@@ -53,17 +53,17 @@ button{cursor:pointer;font-family:inherit}
 .stat-card:hover{border-color:var(--border2);transform:translateY(-2px)}
 .stat-card::after{content:attr(data-glow);position:absolute;top:-30px;right:-20px;font-size:72px;opacity:.04;pointer-events:none;line-height:1}
 .stat-label{font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:10px}
-.stat-val{font-family:'Verdana',Geneva,sans-serif;font-size:34px;line-height:1;letter-spacing:1px}
+.stat-val{font-family:'Tahoma',Geneva,sans-serif;font-size:34px;line-height:1;letter-spacing:1px}
 .stat-val.g{color:var(--green)}.stat-val.r{color:var(--red)}.stat-val.y{color:var(--yellow)}.stat-val.b{color:var(--blue)}.stat-val.w{color:var(--text)}
 .stat-sub{font-size:11.5px;color:var(--muted2);margin-top:5px}
 
 /* SECTION TITLE */
-.sec-title{font-family:'Verdana',Geneva,sans-serif;font-size:17px;letter-spacing:2px;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.sec-title{font-family:'Tahoma',Geneva,sans-serif;font-size:17px;letter-spacing:2px;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:12px}
 .sec-title::after{content:'';flex:1;height:1px;background:var(--border)}
 
 /* CARD */
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:22px}
-.card-title{font-family:'Verdana',Geneva,sans-serif;font-size:14px;letter-spacing:1.5px;color:var(--muted2);margin-bottom:16px}
+.card-title{font-family:'Tahoma',Geneva,sans-serif;font-size:14px;letter-spacing:1.5px;color:var(--muted2);margin-bottom:16px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:28px}
 @media(max-width:720px){.grid2{grid-template-columns:1fr}}
 
@@ -75,11 +75,11 @@ th{padding:11px 16px;text-align:left;font-size:10.5px;font-weight:700;text-trans
 td{padding:11px 16px;font-size:13px;border-top:1px solid var(--border);white-space:nowrap}
 tbody tr{transition:background .15s}
 tbody tr:hover td{background:rgba(255,255,255,.025)}
-.mono{font-family:'Verdana',Geneva,sans-serif;font-size:12px}
+.mono{font-family:'Tahoma',Geneva,sans-serif;font-size:12px}
 .pos{color:var(--green)}.neg{color:var(--red)}
 
 /* BADGES */
-.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:5px;font-size:11px;font-weight:700;font-family:'Verdana',Geneva,sans-serif;letter-spacing:.5px}
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:5px;font-size:11px;font-weight:700;font-family:'Tahoma',Geneva,sans-serif;letter-spacing:.5px}
 .badge-w{background:rgba(0,230,118,.12);color:var(--green)}
 .badge-l{background:rgba(255,61,87,.12);color:var(--red)}
 .badge-d{background:rgba(255,215,64,.12);color:var(--yellow)}
@@ -94,7 +94,7 @@ tbody tr:hover td{background:rgba(255,255,255,.025)}
 .prow-bar-fill{height:100%;border-radius:4px;transition:width 1s cubic-bezier(.4,0,.2,1)}
 .prow-bar-fill.g{background:linear-gradient(90deg,var(--green-dim),var(--green))}
 .prow-bar-fill.r{background:linear-gradient(90deg,#c62828,var(--red))}
-.prow-val{font-family:'Verdana',Geneva,sans-serif;font-size:11.5px;width:78px;text-align:right;flex-shrink:0}
+.prow-val{font-family:'Tahoma',Geneva,sans-serif;font-size:11.5px;width:78px;text-align:right;flex-shrink:0}
 
 /* WIN RATE BAR */
 .winbar-wrap{margin:6px 0 12px}
@@ -126,7 +126,7 @@ tbody tr:hover td{background:rgba(255,255,255,.025)}
   padding:14px 18px;cursor:pointer;user-select:none;
 }
 .mc-head:hover{background:rgba(255,255,255,.02)}
-.mc-num{font-family:'Verdana',Geneva,sans-serif;font-size:11px;color:var(--muted);width:24px;flex-shrink:0}
+.mc-num{font-family:'Tahoma',Geneva,sans-serif;font-size:11px;color:var(--muted);width:24px;flex-shrink:0}
 .mc-info{flex:1;min-width:0}
 .mc-venue{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:13px}
 .mc-venue-san{font-weight:600;color:var(--text)}
@@ -134,13 +134,13 @@ tbody tr:hover td{background:rgba(255,255,255,.025)}
 .mc-score-line{display:inline-flex;align-items:center;gap:5px}
 .mc-team-home{font-weight:700;color:var(--text)}
 .mc-team-away{font-weight:700;color:var(--green)}
-.mc-score-ta  {font-family:'Verdana',Geneva,sans-serif;font-size:22px;line-height:1}
-.mc-score-dich{font-family:'Verdana',Geneva,sans-serif;font-size:22px;line-height:1}
-.mc-score-dash{font-family:'Verdana',Geneva,sans-serif;font-size:16px;color:var(--muted);line-height:1}
+.mc-score-ta  {font-family:'Tahoma',Geneva,sans-serif;font-size:22px;line-height:1}
+.mc-score-dich{font-family:'Tahoma',Geneva,sans-serif;font-size:22px;line-height:1}
+.mc-score-dash{font-family:'Tahoma',Geneva,sans-serif;font-size:16px;color:var(--muted);line-height:1}
 .score-w{color:var(--green)}.score-l{color:var(--red)}.score-d{color:var(--yellow)}
 .mc-date{font-size:11px;color:var(--muted2);margin-top:4px}
 .mc-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.mc-cost{font-family:'Verdana',Geneva,sans-serif;font-size:11px;color:var(--muted)}
+.mc-cost{font-family:'Tahoma',Geneva,sans-serif;font-size:11px;color:var(--muted)}
 .mc-chevron{font-size:12px;color:var(--muted);transition:transform .2s}
 .mc-chevron.open{transform:rotate(180deg)}
 
@@ -498,7 +498,7 @@ const DB = {
 };
 
 // ─── HELPERS ───────────────────────────────────
-const YEARS = [2026, 2025, 2024];
+const YEARS = [2026];
 let currentYear = 2026;
 
 const vnd  = n => (n??0).toLocaleString('vi-VN') + ' ₫';
@@ -854,29 +854,29 @@ function renderLichKQ(){
                 transform="rotate(-90 ${cx} ${cy})"/>
               <!-- center text -->
               <text x="${cx}" y="${cy - 8}" text-anchor="middle" fill="var(--text)"
-                style="font-family:'Verdana',Geneva,sans-serif;font-size:22px;letter-spacing:1px">${pctW}%</text>
+                style="font-family:'Tahoma',Geneva,sans-serif;font-size:22px;letter-spacing:1px">${pctW}%</text>
               <text x="${cx}" y="${cy + 10}" text-anchor="middle" fill="var(--muted2)"
-                style="font-size:10px;font-family:'Verdana',Geneva,sans-serif">Thắng</text>
+                style="font-size:10px;font-family:'Tahoma',Geneva,sans-serif">Thắng</text>
               <text x="${cx}" y="${cy + 24}" text-anchor="middle" fill="var(--muted)"
-                style="font-size:9px;font-family:'Verdana',Geneva,sans-serif">${tongTran} trận</text>
+                style="font-size:9px;font-family:'Tahoma',Geneva,sans-serif">${tongTran} trận</text>
             </svg>
             <div style="display:flex;flex-direction:column;gap:12px;flex:1">
               <div style="display:flex;align-items:center;gap:10px">
                 <div style="width:10px;height:10px;border-radius:50%;background:var(--green);flex-shrink:0"></div>
                 <div style="flex:1;font-size:13px;font-weight:500">Thắng</div>
-                <div style="font-family:'Verdana',Geneva,sans-serif;font-size:20px;color:var(--green)">${thang}</div>
+                <div style="font-family:'Tahoma',Geneva,sans-serif;font-size:20px;color:var(--green)">${thang}</div>
                 <div style="font-size:11px;color:var(--muted);width:36px;text-align:right">${pctW}%</div>
               </div>
               <div style="display:flex;align-items:center;gap:10px">
                 <div style="width:10px;height:10px;border-radius:50%;background:var(--yellow);flex-shrink:0"></div>
                 <div style="flex:1;font-size:13px;font-weight:500">Hòa</div>
-                <div style="font-family:'Verdana',Geneva,sans-serif;font-size:20px;color:var(--yellow)">${hoa}</div>
+                <div style="font-family:'Tahoma',Geneva,sans-serif;font-size:20px;color:var(--yellow)">${hoa}</div>
                 <div style="font-size:11px;color:var(--muted);width:36px;text-align:right">${pctD}%</div>
               </div>
               <div style="display:flex;align-items:center;gap:10px">
                 <div style="width:10px;height:10px;border-radius:50%;background:var(--red);flex-shrink:0"></div>
                 <div style="flex:1;font-size:13px;font-weight:500">Thua</div>
-                <div style="font-family:'Verdana',Geneva,sans-serif;font-size:20px;color:var(--red)">${thua}</div>
+                <div style="font-family:'Tahoma',Geneva,sans-serif;font-size:20px;color:var(--red)">${thua}</div>
                 <div style="font-size:11px;color:var(--muted);width:36px;text-align:right">${pctL}%</div>
               </div>
             </div>
