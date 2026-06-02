@@ -544,13 +544,13 @@ function showLoading(pageId) {
   document.getElementById('page-'+pageId).innerHTML = `
     <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;gap:16px">
       <div style="width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite"></div>
-      <div style="font-size:13px;color:var(--muted2)">Đang tải từ Google Sheets...</div>
+      <div style="font-size:13px;color:var(--muted2)">Đang tải dữ liệu ...</div>
     </div>`;
 }
 function showError(pageId, msg) {
   document.getElementById('page-'+pageId).innerHTML = `
     <div style="background:rgba(255,61,87,.08);border:1px solid rgba(255,61,87,.2);border-radius:12px;padding:24px;text-align:center;color:var(--red);margin-top:20px">
-      ⚠️ Không tải được dữ liệu từ Google Sheets.<br>
+      ⚠️ Lỗi rồi. Thử lại sau nhé !.<br>
       <small style="color:var(--muted2)">${msg}</small><br><br>
       <small style="color:var(--muted2)">Đảm bảo file được chạy qua Live Server (không phải mở trực tiếp file://)</small><br><br>
       <button onclick="renderAll()" style="padding:8px 20px;background:var(--green);color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:600;margin-top:4px">Thử lại</button>
