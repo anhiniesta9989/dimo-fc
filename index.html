@@ -131,14 +131,17 @@ tbody tr:hover td{background:rgba(255,255,255,.025)}
 .mc-head:hover{background:rgba(255,255,255,.02)}
 .mc-num{font-family:'Tahoma',Geneva,sans-serif;font-size:11px;color:var(--muted);width:24px;flex-shrink:0}
 .mc-info{flex:1;min-width:0}
-.mc-venue{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:13px}
-.mc-venue-san{font-weight:600;color:var(--text)}
-.mc-venue-sep{color:var(--muted);font-size:11px;padding:0 2px}
-.mc-score-line{display:inline-flex;align-items:center;gap:5px}
-.mc-team-home{font-weight:700;color:var(--text)}
+.mc-venue{display:flex;flex-direction:column;gap:4px;font-size:13px;flex:1;min-width:0}
+.mc-venue-row{display:grid;grid-template-columns:150px 150px 1fr;align-items:center;gap:12px}
+.mc-score-line{display:inline-flex;align-items:center;gap:6px;justify-content:flex-start;white-space:nowrap;width:100%}
+.mc-gio{font-size:12px;font-weight:600;color:var(--text);border-radius:5px;white-space:nowrap;text-align:left}
+.mc-venue-san{font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
+.mc-venue-sep{color:var(--muted);font-size:11px;padding:0 2px;flex-shrink:0}
+.mc-score-line{display:inline-flex;align-items:center;gap:6px;justify-content:left;white-space:nowrap}
+.mc-team-home{font-weight:700;color:var(--text);white-space:nowrap}
 .mc-team-away{font-weight:700;color:var(--green)}
-.mc-score-ta  {font-family:'Tahoma',Geneva,sans-serif;font-size:22px;line-height:1}
-.mc-score-dich{font-family:'Tahoma',Geneva,sans-serif;font-size:22px;line-height:1}
+.mc-score-ta  {font-family:'Tahoma',Geneva,sans-serif;font-size:16px;line-height:1}
+.mc-score-dich{font-family:'Tahoma',Geneva,sans-serif;font-size:16px;line-height:1}
 .mc-score-dash{font-family:'Tahoma',Geneva,sans-serif;font-size:16px;color:var(--muted);line-height:1}
 .score-w{color:var(--green)}.score-l{color:var(--red)}.score-d{color:var(--yellow)}
 .mc-date{font-size:11px;color:var(--muted2);margin-top:4px}
@@ -249,7 +252,7 @@ tbody tr:hover td{background:rgba(255,255,255,.025)}
 
 <nav class="page-nav">
   <button class="page-btn active" onclick="setPage('lich-kq',this)"><span>📅</span> Lịch &amp; Kết Quả</button>
-  <button class="page-btn"        onclick="setPage('thu-chi',this)"><span>💰</span> Thu &amp; Chi</button>
+  <button class="page-btn"        onclick="setPage('thu-chi',this)"><span>💰</span> Quỹ Đội</button>
   <button class="page-btn"        onclick="setPage('dong-quy',this)"><span>📋</span> Chi Tiết Đóng Quỹ</button>
 </nav>
 
@@ -260,8 +263,7 @@ tbody tr:hover td{background:rgba(255,255,255,.025)}
 </main>
 
 <footer class="footer">
-  ⚽ DIMO FC Dashboard &nbsp;·&nbsp;
-  <a href="https://docs.google.com/spreadsheets/d/1lw8_DGDWDezkbIO78YNLpgZ8viM0j-7qa6n_XIlOFGQ" target="_blank">Google Sheets</a>
+  ⚽ DIMO FC Dashboard ⚽
 </footer>
 
 <script>
@@ -313,34 +315,35 @@ function parseLichKQ(csv) {
   //      25=Linh 26=Thanh 27=Dũng 90 28=Hải 29=Đạt Em 30=Phi 31=Giang
   //      32=Luyện 33=Cảnh (GK) 34=Tuấn (GK) 35=Thông (GK) 36=Khác
   const PLAYER_COLS = [
-    { col: 9,  name: 'Dương'      },
-    { col: 10, name: 'Tài'        },
-    { col: 11, name: 'Cung'       },
-    { col: 12, name: 'Quang'      },
-    { col: 13, name: 'Tuyên'      },
-    { col: 14, name: 'Đạt'        },
-    { col: 15, name: 'Khánh'      },
-    { col: 16, name: 'Anh'        },
-    { col: 17, name: 'Dũng'       },
-    { col: 18, name: 'Triều'      },
-    { col: 19, name: 'Thái'       },
-    { col: 20, name: 'Thành'      },
-    { col: 21, name: 'Vũ'         },
-    { col: 22, name: 'Hùng'       },
-    { col: 23, name: 'Luân'       },
-    { col: 24, name: 'Cường'      },
-    { col: 25, name: 'Linh'       },
-    { col: 26, name: 'Thanh'      },
-    { col: 27, name: 'Dũng 90'    },
-    { col: 28, name: 'Hải'        },
-    { col: 29, name: 'Đạt Em'     },
-    { col: 30, name: 'Phi'        },
-    { col: 31, name: 'Giang'      },
-    { col: 32, name: 'Luyện'      },
-    { col: 33, name: 'Cảnh (GK)'  },
-    { col: 34, name: 'Tuấn (GK)'  },
-    { col: 35, name: 'Thông (GK)' },
-    { col: 36, name: 'Khác'       },
+    { col: 9, name:'Dương'      },
+    { col:10, name:'Tài'        },
+    { col:11, name:'Cung'       },
+    { col:12, name:'Quang'      },
+    { col:13, name:'Đạt'        },
+    { col:14, name:'Tuyên'      },
+    { col:15, name:'Anh'        },
+    { col:16, name:'Dũng'       },
+    { col:17, name:'Triều'      },
+    { col:18, name:'Thái'       },
+    { col:19, name:'Vũ'         },
+    { col:20, name:'Thành'      },
+    { col:21, name:'Luân'       },
+    { col:22, name:'Cường'      },
+    { col:23, name:'Thanh'      },
+    { col:24, name:'Dũng 90'    },
+    { col:25, name:'Hải'        },
+    { col:26, name:'Đạt Em'     },
+    { col:27, name:'Thông (GK)' },
+    { col:28, name:'Tuấn (GK)'  },
+    { col:29, name:'Khánh'      },
+    { col:30, name:'Hùng'       },
+    { col:31, name:'Phi'        },
+    { col:32, name:'Cảnh (GK)'  },
+    { col:33, name:'Giang'      },
+    { col:34, name:'Linh'       },
+    { col:35, name:'Luyện'      },
+    { col:36, name:'Thuận'      },
+    { col:37, name:'Khác'       },
   ];
   const playerNames = PLAYER_COLS.map(p => p.name);
 
@@ -425,8 +428,8 @@ function parseThuChi(csv) {
     const diaDiem = (r[11]||'').trim();
     if (!id || isNaN(parseInt(id)) || !diaDiem) continue;
     const chi   = parseFloat((r[12]||'').replace(/,/g,'')) || 0;
-    const nguoi = parseInt((r[38]||'').trim()) || 0;
-    const chiTB = parseFloat((r[39]||'').replace(/,/g,'')) || 0;
+    const nguoi = parseInt((r[41]||'').trim()) || 0;
+    const chiTB = parseFloat((r[42]||'').replace(/,/g,'')) || 0;
     chiTran.push({ id: parseInt(id), diaDiem, chi, nguoi, chiTB });
   }
 
@@ -458,36 +461,37 @@ function parseThuChi(csv) {
       conLai = parseFloat((r[3]||'').replace(/,/g,'')) || 0;
   }
 
-    // 3. Chi & Còn lại từng người — hardcode col như PLAYER_COLS
-  // row 83=tổng chi, row 85=còn lại, col 13=Dương...
+  // 3. Chi & Còn lại từng người — theo debug log thực tế
+  // row 83=tổng chi, row 85=còn lại
   const FINANCE_COLS = [
     { col:13, name:'Dương'      },
     { col:14, name:'Tài'        },
     { col:15, name:'Cung'       },
     { col:16, name:'Quang'      },
-    { col:17, name:'Tuyên'      },
-    { col:18, name:'Đạt'        },
-    { col:19, name:'Khánh'      },
-    { col:20, name:'Anh'        },
-    { col:21, name:'Dũng'       },
-    { col:22, name:'Triều'      },
-    { col:23, name:'Thái'       },
+    { col:17, name:'Đạt'        },
+    { col:18, name:'Tuyên'      },
+    { col:19, name:'Anh'        },
+    { col:20, name:'Dũng'       },
+    { col:21, name:'Triều'      },
+    { col:22, name:'Thái'       },
+    { col:23, name:'Vũ'         },
     { col:24, name:'Thành'      },
-    { col:25, name:'Vũ'         },
-    { col:26, name:'Hùng'       },
-    { col:27, name:'Luân'       },
-    { col:28, name:'Cường'      },
-    { col:29, name:'Linh'       },
-    { col:30, name:'Thanh'      },
-    { col:31, name:'Dũng 90'    },
-    { col:32, name:'Hải'        },
-    { col:33, name:'Đạt Em'     },
-    { col:34, name:'Phi'        },
-    { col:35, name:'Giang'      },
-    { col:36, name:'Luyện'      },
-    { col:37, name:'Cảnh (GK)'  },
-    { col:38, name:'Tuấn (GK)'  },
-    { col:39, name:'Thông (GK)' },
+    { col:25, name:'Luân'       },
+    { col:26, name:'Cường'      },
+    { col:27, name:'Thanh'      },
+    { col:28, name:'Dũng 90'    },
+    { col:29, name:'Hải'        },
+    { col:30, name:'Đạt Em'     },
+    { col:31, name:'Thông (GK)' },
+    { col:32, name:'Tuấn (GK)'  },
+    { col:33, name:'Khánh'      },
+    { col:34, name:'Hùng'       },
+    { col:35, name:'Phi'        },
+    { col:36, name:'Cảnh (GK)'  },
+    { col:37, name:'Giang'      },
+    { col:38, name:'Linh'       },
+    { col:39, name:'Luyện'      },
+    { col:40, name:'Thuận'      },
   ];
   const playerFinance = {};
   FINANCE_COLS.forEach(({ col, name }) => {
@@ -599,6 +603,16 @@ function toggleTable(id) {
   }
 }
 
+function toggleKetQua() {
+  const extras = document.querySelectorAll('[data-extra="1"]');
+  const btn    = document.getElementById('ket-qua-btn');
+  const isHidden = extras.length && extras[0].style.display === 'none';
+  extras.forEach(el => el.style.display = isHidden ? '' : 'none');
+  if (btn) btn.textContent = isHidden
+    ? 'Rút gọn ▴'
+    : `Xem thêm ${extras.length} trận ▾`;
+}
+
 function toggleChiTran(){
   const wrap    = document.getElementById('chi-tran-wrap');
   const chevron = document.getElementById('chi-tran-chevron');
@@ -637,7 +651,7 @@ function showLoading(pageId) {
   document.getElementById('page-'+pageId).innerHTML = `
     <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;gap:16px">
       <div style="width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite"></div>
-      <div style="font-size:13px;color:var(--muted2)">Đang tải từ Google Sheets...</div>
+      <div style="font-size:13px;color:var(--muted2)">Đang tải dữ liệu...</div>
     </div>`;
 }
 function showError(pageId, msg) {
@@ -690,7 +704,7 @@ function renderThuChi(){
     return;
   }
 
-  const chiTran  = tc2.chiTran  || [];
+  const chiTran  = [...(tc2.chiTran || [])].sort((a,b) => b.id - a.id);
   const amList   = tc2.amList   || [];
   const quyDoi   = tc2.quyDoi   || [];
   const playerFinance = tc2.playerFinance || {};
@@ -910,12 +924,13 @@ function renderLichKQ(){
           <span class="mc-num">${t.id}</span>
           <div class="mc-info">
             <div class="mc-venue">
-              <span style="font-size:12px;font-weight:600;color:var(--text);background:var(--bg3);border-radius:5px;padding:2px 7px">⏰ ${t.gio}</span>
-              <span class="mc-venue-sep">·</span>
-              <span class="mc-venue-san">🏟️ ${t.san}</span>
-              ${t.doiThu?`<span class="mc-venue-sep">·</span><span class="mc-team-away">vs ${t.doiThu}</span>`:''}
+              <div class="mc-venue-row">
+                <span class="mc-gio">${t.gio ? '⏰ '+t.gio : '—'}</span>
+                <span class="mc-venue-san">🏟️ ${t.san}</span>
+                <span class="mc-score-line" style="color:var(--muted2)">${t.doiThu ? 'vs '+t.doiThu : ''}</span>
+              </div>
+              <div class="mc-date">📅 ${t.ngay}</div>
             </div>
-            <div class="mc-date">📅 ${t.ngay}</div>
           </div>
           <div class="mc-right"><span class="badge badge-up">📆 Sắp diễn ra</span></div>
         </div>
@@ -932,11 +947,13 @@ function renderLichKQ(){
           <span class="mc-num">${t.id}</span>
           <div class="mc-info">
             <div class="mc-venue">
-              ${t.gio?`<span style="font-size:12px;font-weight:600;color:var(--text);background:var(--bg3);border-radius:5px;padding:2px 7px">⏰ ${t.gio}</span><span class="mc-venue-sep">·</span>`:''}
-              <span class="mc-venue-san">🏟️ ${t.san}</span>
-              ${t.doiThu?`<span class="mc-venue-sep">·</span><span class="mc-team-away">vs ${t.doiThu}</span>`:''}
+              <div class="mc-venue-row">
+                <span class="mc-gio">${t.gio ? '⏰ '+t.gio : '—'}</span>
+                <span class="mc-venue-san">🏟️ ${t.san}</span>
+                <span class="mc-score-line" style="color:var(--muted2)">${t.doiThu ? 'vs '+t.doiThu : ''}</span>
+              </div>
+              <div class="mc-date">📅 ${t.ngay}</div>
             </div>
-            <div class="mc-date">📅 ${t.ngay}</div>
           </div>
           <div class="mc-right"><span class="badge" style="background:rgba(255,215,64,.12);color:var(--yellow)">⏳ Đang cập nhật</span></div>
         </div>
@@ -957,18 +974,19 @@ function renderLichKQ(){
           <span class="mc-num">${t.id}</span>
           <div class="mc-info">
             <div class="mc-venue">
-              ${t.gio?`<span style="font-size:12px;font-weight:600;color:var(--text);background:var(--bg3);border-radius:5px;padding:2px 7px">⏰ ${t.gio}</span><span class="mc-venue-sep">·</span>`:''}
-              <span class="mc-venue-san">🏟️ ${t.san}</span>
-              <span class="mc-venue-sep">·</span>
-              <span class="mc-score-line">
-                <span class="mc-team-home">DIMO FC</span>
-                <span class="mc-score-ta ${taWin?'score-w':dichWin?'score-l':'score-d'}">${t.ta}</span>
-                <span class="mc-score-dash">-</span>
-                <span class="mc-score-dich ${dichWin?'score-w':taWin?'score-l':'score-d'}">${t.dich}</span>
-                <span class="mc-team-away">${t.doiThu||'Đối thủ'}</span>
-              </span>
+              <div class="mc-venue-row">
+                <span class="mc-gio">${t.gio ? '⏰ '+t.gio : '—'}</span>
+                <span class="mc-venue-san">🏟️ ${t.san}</span>
+                <span class="mc-score-line">
+                  <span class="mc-team-home">DIMO FC</span>
+                  <span class="mc-score-ta ${taWin?'score-w':dichWin?'score-l':'score-d'}">${t.ta}</span>
+                  <span class="mc-score-dash">-</span>
+                  <span class="mc-score-dich ${dichWin?'score-w':taWin?'score-l':'score-d'}">${t.dich}</span>
+                  <span class="mc-team-away">${t.doiThu||'Đối thủ'}</span>
+                </span>
+              </div>
+              <div class="mc-date">📅 ${t.ngay}${t.nguoi>0?' · 👥 '+t.nguoi+' người':''}</div>
             </div>
-            <div class="mc-date">📅 ${t.ngay}${t.nguoi>0?' · 👥 '+t.nguoi+' người':''}</div>
           </div>
           <div class="mc-right">
             ${kqBadge(t.kq)}
@@ -1104,7 +1122,23 @@ function renderLichKQ(){
     </div>
 
     <div class="sec-title">KẾT QUẢ THI ĐẤU — Mới nhất</div>
-    <div class="matches-list">${results.map(resultCard).join('')}</div>`;
+    <div class="matches-list">
+      ${results.map((t, idx) => {
+        const card = resultCard(t);
+        // Wrap cards after index 4 in a hidden div
+        if (idx >= 5) {
+          return card.replace('<div class="match-card', '<div class="match-card ket-qua-extra" style="display:none" data-extra="1"').replace('<div class="match-card ', '<div class="match-card ');
+        }
+        return card;
+      }).join('')}
+    </div>
+    ${results.length > 5 ? `
+    <div style="text-align:center;margin-bottom:28px">
+      <button id="ket-qua-btn" onclick="toggleKetQua()"
+        style="padding:7px 20px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--muted2);font-size:12px;cursor:pointer">
+        Xem thêm ${results.length - 5} trận ▾
+      </button>
+    </div>` : ''}`;
 }
 
 // ═══════════════════════════════════════════════
