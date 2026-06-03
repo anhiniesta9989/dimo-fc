@@ -211,6 +211,19 @@ tbody tr:hover td{background:rgba(255,255,255,.025)}
 
 /* MEMBER TABLE */
 .member-chip{display:inline-flex;align-items:center;gap:6px}
+/* MEMBER CARDS */
+.member-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-bottom:28px}
+.member-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 16px;display:flex;flex-direction:column;align-items:center;gap:8px;transition:border-color .2s,transform .2s;text-align:center}
+.member-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.member-card.nghi{opacity:.55;border-style:dashed}
+.member-avatar{width:72px;height:72px;border-radius:50%;border:2px solid var(--border2);background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:var(--green);flex-shrink:0;overflow:hidden}
+.member-avatar img{width:100%;height:100%;object-fit:cover}
+.member-name{font-size:14px;font-weight:700;color:var(--text);line-height:1.3}
+.member-ho{font-size:11px;color:var(--muted2);margin-top:-4px}
+.member-so-ao{font-size:30px;font-weight:700;color:var(--green);line-height:1}
+.member-info-row{font-size:11px;color:var(--muted2)}
+.badge-active{background:rgba(0,230,118,.12);color:var(--green);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-nghi{background:rgba(255,61,87,.12);color:var(--red);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
 
 /* EMPTY */
 .empty{text-align:center;padding:60px 20px;color:var(--muted);font-size:14px}
@@ -254,16 +267,19 @@ tbody tr:hover td{background:rgba(255,255,255,.025)}
   <button class="page-btn active" onclick="setPage('lich-kq',this)"><span>📅</span> Lịch &amp; Kết Quả</button>
   <button class="page-btn"        onclick="setPage('thu-chi',this)"><span>💰</span> Quỹ Đội</button>
   <button class="page-btn"        onclick="setPage('dong-quy',this)"><span>📋</span> Chi Tiết Đóng Quỹ</button>
+  <button class="page-btn"        onclick="setPage('thanh-vien',this)"><span>👥</span> Thành Viên</button>
 </nav>
 
 <main class="content">
-  <section id="page-lich-kq"  class="page active"></section>
-  <section id="page-thu-chi"  class="page"></section>
-  <section id="page-dong-quy" class="page"></section>
+  <section id="page-lich-kq"    class="page active"></section>
+  <section id="page-thu-chi"    class="page"></section>
+  <section id="page-dong-quy"   class="page"></section>
+  <section id="page-thanh-vien" class="page"></section>
 </main>
 
 <footer class="footer">
-  ⚽ DIMO FC Dashboard ⚽
+  ⚽ DIMO FC Dashboard &nbsp;·&nbsp;
+  <a href="https://docs.google.com/spreadsheets/d/1lw8_DGDWDezkbIO78YNLpgZ8viM0j-7qa6n_XIlOFGQ" target="_blank">Google Sheets</a>
 </footer>
 
 <script>
@@ -517,7 +533,32 @@ function parseThuChi(csv) {
 }
 
 // ═══════════════════════════════════════════════
-//  DATA TĨNH (Thu & Chi, Đóng quỹ — chưa fetch)
+//  PARSE sheet "YEAR - Thành Viên"
+//  Row 1: title, Row 2: header, Row 3+: data
+//  A:STT B:Họ C:Tên D:SốÁo E:SĐT F:NgàySinh G:Email H:Status
+// ═══════════════════════════════════════════════
+function parseThanhVien(csv) {
+  const rows = parseCSV(csv);
+  const members = [];
+  for (let i = 2; i < rows.length; i++) {
+    const r = rows[i];
+    const ten = (r[2]||'').trim();
+    if (!ten) continue;
+    members.push({
+      stt:    (r[0]||'').trim(),
+      ho:     (r[1]||'').trim(),
+      ten,
+      soAo:   (r[3]||'').trim(),
+      sdt:    (r[4]||'').trim(),
+      ngaySinh: (r[5]||'').trim(),
+      email:  (r[6]||'').trim(),
+      status: (r[7]||'').trim(),
+    });
+  }
+  return members;
+}
+
+
 // ═══════════════════════════════════════════════
 
 // Danh sách cầu thủ fallback (nếu sheet chưa load)
@@ -651,7 +692,7 @@ function showLoading(pageId) {
   document.getElementById('page-'+pageId).innerHTML = `
     <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;gap:16px">
       <div style="width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite"></div>
-      <div style="font-size:13px;color:var(--muted2)">Đang tải dữ liệu...</div>
+      <div style="font-size:13px;color:var(--muted2)">Đang tải từ Google Sheets...</div>
     </div>`;
 }
 function showError(pageId, msg) {
@@ -669,26 +710,32 @@ async function renderAll() {
   showLoading('lich-kq');
   showLoading('thu-chi');
   showLoading('dong-quy');
+  showLoading('thanh-vien');
 
   const sheetLQ = `${currentYear} - LỊCH & KẾT QUẢ`;
   const sheetTC = `${currentYear} - THU & CHI`;
   const sheetCT = `${currentYear} - Chi tiết đóng quỹ`;
+  const sheetTV = `${currentYear} - Thành Viên`;
   try {
-    const [csvLQ, csvTC, csvCT] = await Promise.all([
+    const [csvLQ, csvTC, csvCT, csvTV] = await Promise.all([
       fetchCSV(sheetLQ),
       fetchCSV(sheetTC),
       fetchCSV(sheetCT),
+      fetchCSV(sheetTV),
     ]);
-    DB[currentYear].lichKQ  = parseLichKQ(csvLQ);
-    DB[currentYear].thuChi2 = parseThuChi(csvTC);
-    DB[currentYear].chiTiet = parseChiTiet(csvCT);
+    DB[currentYear].lichKQ    = parseLichKQ(csvLQ);
+    DB[currentYear].thuChi2   = parseThuChi(csvTC);
+    DB[currentYear].chiTiet   = parseChiTiet(csvCT);
+    DB[currentYear].thanhVien = parseThanhVien(csvTV);
     renderThuChi();
     renderLichKQ();
     renderDongQuy();
+    renderThanhVien();
   } catch(e) {
     showError('lich-kq', e.message);
     showError('thu-chi', e.message);
     showError('dong-quy', e.message);
+    showError('thanh-vien', e.message);
   }
 }
 
@@ -1234,6 +1281,10 @@ function renderDongQuy(){
           <span style="font-size:16px;flex-shrink:0">🧤</span>
           <span style="font-size:13px;color:var(--muted2);line-height:1.6">Free cho tất cả thủ môn (trừ các trận livestream &amp; ăn nhậu)</span>
         </div>
+        <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
+          <span style="font-size:16px;flex-shrink:0">🧤</span>
+          <span style="font-size:13px;color:var(--muted2);line-height:1.6">Mọi thắc mắc xin liên hệ Giám đốc tài chính (Đức Anh)</span>
+        </div>
         <div style="padding-top:14px">
           <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Lịch đóng quỹ</div>
           ${[['Quý I','1/1 – 31/3'],['Quý II','1/4 – 30/6'],['Quý III','1/7 – 30/9'],['Quý IV','1/10 – 31/12']].map(([q,r])=>`
@@ -1297,6 +1348,64 @@ function renderDongQuy(){
         Xem thêm ${chiTiet.length - 5} lần đóng ▾
       </button>
     </div>` : ''}`;
+}
+
+// ═══════════════════════════════════════════════
+//  PAGE 4 — THÀNH VIÊN
+// ═══════════════════════════════════════════════
+function renderThanhVien() {
+  const el = document.getElementById('page-thanh-vien');
+  const members = DB[currentYear].thanhVien || [];
+  if (!members.length) {
+    el.innerHTML = `<div class="empty"><div class="big">👥</div>Chưa có dữ liệu thành viên.</div>`;
+    return;
+  }
+
+  const active = members.filter(m => !m.status.toLowerCase().includes('nghỉ'));
+  const nghi   = members.filter(m =>  m.status.toLowerCase().includes('nghỉ'));
+
+  function memberCard(m) {
+    const initials = ((m.ho.trim().split(' ').pop()[0]||'') + (m.ten[0]||'')).toUpperCase();
+    const isNghi   = m.status.toLowerCase().includes('nghỉ');
+    return `
+      <div class="member-card ${isNghi?'nghi':''}">
+        <div class="member-avatar">${initials}</div>
+        <div class="member-so-ao">${m.soAo||'—'}</div>
+        <div style="line-height:1.4">
+          <span class="member-ho">${m.ho} </span><span class="member-name">${m.ten}</span>
+        </div>
+        <div style="margin:4px 0">
+          ${isNghi
+            ? '<span class="badge-nghi">Đã nghỉ</span>'
+            : '<span class="badge-active">Đang tham gia</span>'}
+        </div>
+        ${m.ngaySinh ? `<div class="member-info-row">🎂 ${m.ngaySinh}</div>` : ''}
+      </div>`;
+  }
+
+  el.innerHTML = `
+    <div class="stats-row">
+      <div class="stat-card fade-in d1" data-glow="👥">
+        <div class="stat-label">Tổng Thành Viên</div>
+        <div class="stat-val w">${members.length}</div>
+        <div class="stat-sub">Mùa ${currentYear}</div>
+      </div>
+      <div class="stat-card fade-in d2" data-glow="✅">
+        <div class="stat-label">Đang Tham Gia</div>
+        <div class="stat-val g">${active.length}</div>
+        <div class="stat-sub">Thành viên active</div>
+      </div>
+      <div class="stat-card fade-in d3" data-glow="🚪">
+        <div class="stat-label">Đã Nghỉ</div>
+        <div class="stat-val r">${nghi.length}</div>
+        <div class="stat-sub">Không còn tham gia</div>
+      </div>
+    </div>
+    <div class="sec-title">ĐANG THAM GIA (${active.length})</div>
+    <div class="member-grid">${active.map(memberCard).join('')}</div>
+    ${nghi.length ? `
+    <div class="sec-title">ĐÃ NGHỈ (${nghi.length})</div>
+    <div class="member-grid">${nghi.map(memberCard).join('')}</div>` : ''}`;
 }
 
 // ─── BOOT ──────────────────────────────────────
