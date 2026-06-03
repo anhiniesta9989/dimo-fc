@@ -5,6 +5,14 @@
 <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/anhiniesta9989/dimo-fc/main/logo-dimo-fc.jpg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DIMO FC — Dashboard Nội Bộ</title>
+<!-- Google Analytics GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RKWCT26RBY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RKWCT26RBY');
+</script>
 
 
 <style>
@@ -1371,9 +1379,8 @@ function renderThanhVien() {
       <div class="member-card ${isNghi?'nghi':''}">
         <div class="member-avatar">${initials}</div>
         <div class="member-so-ao">${m.soAo||'—'}</div>
-        <div style="line-height:1.4">
-          <span class="member-ho">${m.ho} </span><span class="member-name">${m.ten}</span>
-        </div>
+        <div class="member-name">${m.ten}</div>
+        <div class="member-ho">${m.ho}</div>
         <div style="margin:4px 0">
           ${isNghi
             ? '<span class="badge-nghi">Đã nghỉ</span>'
