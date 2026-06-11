@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DIMO FC — Dashboard Nội Bộ</title>
+<!-- Google Analytics GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RKWCT26RBY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RKWCT26RBY');
+</script>
+<link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/anhiniesta9989/dimo-fc/main/logo-dimo-fc.jpg">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="header">
+  <div class="logo">
+    <div class="logo-icon"><img src="https://raw.githubusercontent.com/anhiniesta9989/dimo-fc/main/logo-dimo-fc.jpg" style="width:40px;height:40px;object-fit:contain;border-radius:8px"></div>
+    <div>
+      <div class="logo-name">DIMO FC</div>
+      <div class="logo-sub">Dashboard Nội Bộ</div>
+    </div>
+  </div>
+  <div class="year-group">
+    <span class="year-label">Năm</span>
+    <div class="year-tabs" id="yearTabs"></div>
+  </div>
+</header>
+
+<nav class="page-nav">
+  <button class="page-btn active" onclick="setPage('lich-kq',this)"><span>📅</span> Lịch &amp; Kết Quả</button>
+  <button class="page-btn"        onclick="setPage('thu-chi',this)"><span>💰</span> Quỹ Đội</button>
+  <button class="page-btn"        onclick="setPage('dong-quy',this)"><span>📋</span> Chi Tiết Đóng Quỹ</button>
+  <button class="page-btn"        onclick="setPage('thanh-vien',this)"><span>👥</span> Thành Viên</button>
+</nav>
+
+<main class="content">
+  <section id="page-lich-kq"    class="page active"></section>
+  <section id="page-thu-chi"    class="page"></section>
+  <section id="page-dong-quy"   class="page"></section>
+  <section id="page-thanh-vien" class="page"></section>
+</main>
+
+<footer class="footer">
+  ⚽ DIMO FC Dashboard &nbsp;·&nbsp;
+  <a href="https://docs.google.com/spreadsheets/d/1lw8_DGDWDezkbIO78YNLpgZ8viM0j-7qa6n_XIlOFGQ" target="_blank">Google Sheets</a>
+</footer>
+
+<!-- JS: thứ tự load quan trọng -->
+<script src="js/config.js"></script>
+<script src="js/parse.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/render-thu-chi.js"></script>
+<script src="js/render-lich-kq.js"></script>
+<script src="js/render-dong-quy.js"></script>
+<script src="js/render-thanh-vien.js"></script>
+</body>
+</html>
