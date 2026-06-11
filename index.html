@@ -5,7 +5,6 @@
 <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/anhiniesta9989/dimo-fc/main/logo-dimo-fc.jpg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DIMO FC — Dashboard Nội Bộ</title>
-<!-- Google Analytics GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RKWCT26RBY"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -227,6 +226,19 @@ tbody tr:hover td{background:rgba(255,255,255,.025)}
 .member-avatar{width:72px;height:72px;border-radius:50%;border:2px solid var(--border2);background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:var(--green);flex-shrink:0;overflow:hidden}
 .member-avatar img{width:100%;height:100%;object-fit:cover}
 .member-name{font-size:14px;font-weight:700;color:var(--text);line-height:1.3}
+.member-ho{font-size:11px;color:var(--muted2)}
+.member-so-ao{font-size:30px;font-weight:700;color:var(--green);line-height:1}
+.member-info-row{font-size:11px;color:var(--muted2)}
+.badge-active{background:rgba(0,230,118,.12);color:var(--green);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-nghi{background:rgba(255,61,87,.12);color:var(--red);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+/* MEMBER CARDS */
+.member-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-bottom:28px}
+.member-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 16px;display:flex;flex-direction:column;align-items:center;gap:8px;transition:border-color .2s,transform .2s;text-align:center}
+.member-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.member-card.nghi{opacity:.55;border-style:dashed}
+.member-avatar{width:72px;height:72px;border-radius:50%;border:2px solid var(--border2);background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:var(--green);flex-shrink:0;overflow:hidden}
+.member-avatar img{width:100%;height:100%;object-fit:cover}
+.member-name{font-size:14px;font-weight:700;color:var(--text);line-height:1.3}
 .member-ho{font-size:11px;color:var(--muted2);margin-top:-4px}
 .member-so-ao{font-size:30px;font-weight:700;color:var(--green);line-height:1}
 .member-info-row{font-size:11px;color:var(--muted2)}
@@ -338,37 +350,68 @@ function parseLichKQ(csv) {
   //      17=Dũng 18=Triều 19=Thái 20=Thành 21=Vũ 22=Hùng 23=Luân 24=Cường
   //      25=Linh 26=Thanh 27=Dũng 90 28=Hải 29=Đạt Em 30=Phi 31=Giang
   //      32=Luyện 33=Cảnh (GK) 34=Tuấn (GK) 35=Thông (GK) 36=Khác
-  const PLAYER_COLS = [
-    { col: 9, name:'Dương'      },
-    { col:10, name:'Tài'        },
-    { col:11, name:'Cung'       },
-    { col:12, name:'Quang'      },
-    { col:13, name:'Đạt'        },
-    { col:14, name:'Tuyên'      },
-    { col:15, name:'Anh'        },
-    { col:16, name:'Dũng'       },
-    { col:17, name:'Triều'      },
-    { col:18, name:'Thái'       },
-    { col:19, name:'Vũ'         },
-    { col:20, name:'Thành'      },
-    { col:21, name:'Luân'       },
-    { col:22, name:'Cường'      },
-    { col:23, name:'Thanh'      },
-    { col:24, name:'Dũng 90'    },
-    { col:25, name:'Hải'        },
-    { col:26, name:'Đạt Em'     },
-    { col:27, name:'Thông (GK)' },
-    { col:28, name:'Tuấn (GK)'  },
-    { col:29, name:'Khánh'      },
-    { col:30, name:'Hùng'       },
-    { col:31, name:'Phi'        },
-    { col:32, name:'Cảnh (GK)'  },
-    { col:33, name:'Giang'      },
-    { col:34, name:'Linh'       },
-    { col:35, name:'Luyện'      },
-    { col:36, name:'Thuận'      },
-    { col:37, name:'Khác'       },
-  ];
+  // PLAYER_COLS hardcode theo năm (merged cells khi export CSV)
+  const PLAYER_COLS_MAP = {
+    2026: [
+      { col: 9, name:'Dương'      },
+      { col:10, name:'Tài'        },
+      { col:11, name:'Cung'       },
+      { col:12, name:'Quang'      },
+      { col:13, name:'Đạt'        },
+      { col:14, name:'Tuyên'      },
+      { col:15, name:'Anh'        },
+      { col:16, name:'Dũng'       },
+      { col:17, name:'Triều'      },
+      { col:18, name:'Thái'       },
+      { col:19, name:'Vũ'         },
+      { col:20, name:'Thành'      },
+      { col:21, name:'Luân'       },
+      { col:22, name:'Cường'      },
+      { col:23, name:'Thanh'      },
+      { col:24, name:'Dũng 90'    },
+      { col:25, name:'Hải'        },
+      { col:26, name:'Đạt Em'     },
+      { col:27, name:'Thông (GK)' },
+      { col:28, name:'Tuấn (GK)'  },
+      { col:29, name:'Khánh'      },
+      { col:30, name:'Hùng'       },
+      { col:31, name:'Phi'        },
+      { col:32, name:'Cảnh (GK)'  },
+      { col:33, name:'Giang'      },
+      { col:34, name:'Linh'       },
+      { col:35, name:'Luyện'      },
+      { col:36, name:'Thuận'      },
+      { col:37, name:'Khác'       },
+    ],
+    2025: [
+      { col: 9, name:'Dương'      },
+      { col:10, name:'Tài'        },
+      { col:11, name:'Cung'       },
+      { col:12, name:'Quang'      },
+      { col:13, name:'Đạt'        },
+      { col:14, name:'Anh'        },
+      { col:15, name:'Tuyên'      },
+      { col:16, name:'Dũng'       },
+      { col:17, name:'Triều'      },
+      { col:18, name:'Linh'       },
+      { col:19, name:'Thái'       },
+      { col:20, name:'Vũ'         },
+      { col:21, name:'Thông (GK)' },
+      { col:22, name:'Thành'      },
+      { col:23, name:'Tuấn (GK)'  },
+      { col:24, name:'Khánh'      },
+      { col:25, name:'Đức (GK)'   },
+      { col:26, name:'Hùng'       },
+      { col:27, name:'Luân'       },
+      { col:28, name:'Cường'      },
+      { col:29, name:'Thanh'      },
+      { col:30, name:'Dũng 90'    },
+      { col:31, name:'Hải'        },
+      { col:32, name:'Đạt Em'     },
+      { col:33, name:'Khác'       },
+    ],
+  };
+  const PLAYER_COLS = PLAYER_COLS_MAP[currentYear] || PLAYER_COLS_MAP[2026];
   const playerNames = PLAYER_COLS.map(p => p.name);
 
   const tran = [];
@@ -376,7 +419,8 @@ function parseLichKQ(csv) {
     const r = rows[i];
     const stt = (r[0]||'').trim();
     if (!stt || isNaN(parseInt(stt))) continue;
-
+    const san = (r[3]||'').trim();
+    if (!san) continue; // bỏ dòng không có tên sân
     const taRaw   = (r[5]||'').trim();
     const dichRaw = (r[7]||'').trim();
     const ta   = taRaw   !== '' ? parseInt(taRaw)   : null;
@@ -404,7 +448,7 @@ function parseLichKQ(csv) {
       id:     parseInt(stt),
       ngay:   (r[1]||'').trim(),
       gio:    (r[2]||'').trim(),
-      san:    (r[3]||'').trim(),
+      san,
       doiThu: (r[4]||'').trim(),
       ta, dich, kq,
       nguoi, players,
@@ -621,7 +665,7 @@ const DB = {
 };
 
 // ─── HELPERS ───────────────────────────────────
-const YEARS = [2026];
+const YEARS = [2026, 2025];
 let currentYear = 2026;
 
 const vnd  = n => (n??0).toLocaleString('vi-VN') + ' ₫';
@@ -700,7 +744,7 @@ function showLoading(pageId) {
   document.getElementById('page-'+pageId).innerHTML = `
     <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;gap:16px">
       <div style="width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite"></div>
-      <div style="font-size:13px;color:var(--muted2)">Đang tải từ Google Sheets...</div>
+      <div style="font-size:13px;color:var(--muted2)">Đang tải dữ liệu...</div>
     </div>`;
 }
 function showError(pageId, msg) {
@@ -719,11 +763,12 @@ async function renderAll() {
   showLoading('thu-chi');
   showLoading('dong-quy');
   showLoading('thanh-vien');
+  showLoading('thanh-vien');
 
   const sheetLQ = `${currentYear} - LỊCH & KẾT QUẢ`;
   const sheetTC = `${currentYear} - THU & CHI`;
   const sheetCT = `${currentYear} - Chi tiết đóng quỹ`;
-  const sheetTV = `${currentYear} - Thành Viên`;
+  const sheetTV = 'Thành Viên';
   try {
     const [csvLQ, csvTC, csvCT, csvTV] = await Promise.all([
       fetchCSV(sheetLQ),
@@ -734,15 +779,18 @@ async function renderAll() {
     DB[currentYear].lichKQ    = parseLichKQ(csvLQ);
     DB[currentYear].thuChi2   = parseThuChi(csvTC);
     DB[currentYear].chiTiet   = parseChiTiet(csvCT);
+    if (csvTV) DB.thanhVien = parseThanhVien(csvTV);
     DB[currentYear].thanhVien = parseThanhVien(csvTV);
     renderThuChi();
     renderLichKQ();
     renderDongQuy();
     renderThanhVien();
+    renderThanhVien();
   } catch(e) {
     showError('lich-kq', e.message);
     showError('thu-chi', e.message);
     showError('dong-quy', e.message);
+    showError('thanh-vien', e.message);
     showError('thanh-vien', e.message);
   }
 }
@@ -1413,6 +1461,64 @@ function renderThanhVien() {
     ${nghi.length ? `
     <div class="sec-title">ĐÃ NGHỈ (${nghi.length})</div>
     <div class="member-grid">${nghi.map(memberCard).join('')}</div>` : ''}`;
+}
+
+// ═══════════════════════════════════════════════
+//  PARSE sheet "Thanh Vien"
+// ═══════════════════════════════════════════════
+function parseThanhVien(csv) {
+  const rows = parseCSV(csv);
+  const members = [];
+  for (let i = 2; i < rows.length; i++) {
+    const r = rows[i];
+    const ten = (r[2]||'').trim();
+    if (!ten) continue;
+    members.push({
+      stt: (r[0]||'').trim(),
+      ho:  (r[1]||'').trim(),
+      ten,
+      soAo:     (r[3]||'').trim(),
+      sdt:      (r[4]||'').trim(),
+      ngaySinh: (r[5]||'').trim(),
+      email:    (r[6]||'').trim(),
+      status:   (r[7]||'').trim(),
+    });
+  }
+  return members;
+}
+
+// ═══════════════════════════════════════════════
+//  PAGE 4 - THANH VIEN
+// ═══════════════════════════════════════════════
+function renderThanhVien() {
+  const el = document.getElementById('page-thanh-vien');
+  const members = DB.thanhVien || [];
+  if (!members.length) {
+    el.innerHTML = '<div class="empty"><div class="big">👥</div>Chưa có dữ liệu thành viên.</div>';
+    return;
+  }
+  const active = members.filter(m => !m.status.toLowerCase().includes('nghỉ'));
+  const nghi   = members.filter(m =>  m.status.toLowerCase().includes('nghỉ'));
+  function memberCard(m) {
+    const initials = ((m.ho.trim().split(' ').pop()[0]||'') + (m.ten[0]||'')).toUpperCase();
+    const isNghi = m.status.toLowerCase().includes('nghỉ');
+    return `<div class="member-card ${isNghi?'nghi':''}">
+      <div class="member-avatar">${initials}</div>
+      <div class="member-so-ao">${m.soAo||'—'}</div>
+      <div style="line-height:1.4"><span class="member-ho">${m.ho} </span><span class="member-name">${m.ten}</span></div>
+      <div style="margin:4px 0">${isNghi?'<span class="badge-nghi">Đã nghỉ</span>':'<span class="badge-active">Đang tham gia</span>'}</div>
+      ${m.ngaySinh?`<div class="member-info-row">🎂 ${m.ngaySinh}</div>`:''}
+    </div>`;
+  }
+  el.innerHTML = `
+    <div class="stats-row">
+      <div class="stat-card fade-in d1" data-glow="👥"><div class="stat-label">Tổng Thành Viên</div><div class="stat-val w">${members.length}</div><div class="stat-sub">Mùa ${currentYear}</div></div>
+      <div class="stat-card fade-in d2" data-glow="✅"><div class="stat-label">Đang Tham Gia</div><div class="stat-val g">${active.length}</div><div class="stat-sub">Active</div></div>
+      <div class="stat-card fade-in d3" data-glow="🚪"><div class="stat-label">Đã Nghỉ</div><div class="stat-val r">${nghi.length}</div><div class="stat-sub">Không còn tham gia</div></div>
+    </div>
+    <div class="sec-title">ĐANG THAM GIA (${active.length})</div>
+    <div class="member-grid">${active.map(memberCard).join('')}</div>
+    ${nghi.length?`<div class="sec-title">ĐÃ NGHỈ (${nghi.length})</div><div class="member-grid">${nghi.map(memberCard).join('')}</div>`:''}`;
 }
 
 // ─── BOOT ──────────────────────────────────────
