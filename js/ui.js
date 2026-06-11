@@ -62,7 +62,7 @@ function showLoading(pageId) {
   document.getElementById('page-'+pageId).innerHTML = `
     <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;gap:16px">
       <div style="width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite"></div>
-      <div style="font-size:13px;color:var(--muted2)">Đang tải từ Google Sheets...</div>
+      <div style="font-size:13px;color:var(--muted2)">Đang tải dữ liệu...</div>
     </div>`;
 }
 function showError(pageId, msg) {
