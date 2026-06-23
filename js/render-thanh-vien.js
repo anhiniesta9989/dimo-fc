@@ -7,12 +7,14 @@ function renderThanhVien() {
   }
   const active = members.filter(m => !m.status.toLowerCase().includes('nghỉ'));
   const nghi   = members.filter(m =>  m.status.toLowerCase().includes('nghỉ'));
+  function removeAccents(str) {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/Đ/g,'D');
+  }
   function memberCard(m) {
     const initials = ((m.ho.trim().split(' ').pop()[0]||'') + (m.ten[0]||'')).toUpperCase();
     const isNghi = m.status.toLowerCase().includes('nghỉ');
-    // Auto-generate avatar URL: soAo_Ten.jpg
     const avatarUrl = m.soAo
-      ? `https://raw.githubusercontent.com/anhiniesta9989/dimo-fc/main/avatars/${m.soAo}_${m.ten.replace(/\s+/g,'')}.jpg`
+      ? `https://raw.githubusercontent.com/anhiniesta9989/dimo-fc/main/avatars/${m.soAo}_${encodeURIComponent(m.ten.replace(/\s+/g,''))}.jpg`
       : null;
     return `<div class="member-card ${isNghi?'nghi':''}">
       <div class="member-avatar">
