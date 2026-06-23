@@ -10,8 +10,16 @@ function renderThanhVien() {
   function memberCard(m) {
     const initials = ((m.ho.trim().split(' ').pop()[0]||'') + (m.ten[0]||'')).toUpperCase();
     const isNghi = m.status.toLowerCase().includes('nghỉ');
+    // Auto-generate avatar URL: soAo_Ten.jpg
+    const avatarUrl = m.soAo
+      ? `https://raw.githubusercontent.com/anhiniesta9989/dimo-fc/main/avatars/${m.soAo}_${m.ten.replace(/\s+/g,'')}.jpg`
+      : null;
     return `<div class="member-card ${isNghi?'nghi':''}">
-      <div class="member-avatar">${initials}</div>
+      <div class="member-avatar">
+        ${avatarUrl
+          ? `<img src="${avatarUrl}" alt="${m.ten}" onerror="this.style.display='none';this.parentElement.setAttribute('data-initials','${initials}')">`
+          : initials}
+      </div>
       <div class="member-so-ao">${m.soAo||'—'}</div>
       <div style="line-height:1.4"><span class="member-ho">${m.ho} </span><span class="member-name">${m.ten}</span></div>
       <div style="margin:4px 0">${isNghi?'<span class="badge-nghi">Đã nghỉ</span>':'<span class="badge-active">Đang tham gia</span>'}</div>
