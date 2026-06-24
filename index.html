@@ -14,6 +14,7 @@
 </script>
 <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/anhiniesta9989/dimo-fc/main/logo-dimo-fc.jpg">
 <link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 <header class="header">
@@ -28,6 +29,7 @@
     <span class="year-label">Năm</span>
     <div class="year-tabs" id="yearTabs"></div>
   </div>
+  <button class="dangky-btn" onclick="openDangKy()">🏆 Đăng ký giải</button>
 </header>
 
 <nav class="page-nav">
@@ -49,6 +51,29 @@
   <a href="https://docs.google.com/spreadsheets/d/1lw8_DGDWDezkbIO78YNLpgZ8viM0j-7qa6n_XIlOFGQ" target="_blank">Google Sheets</a>
 </footer>
 
+<!-- MODAL ĐĂNG KÝ GIẢI -->
+<div class="modal-overlay" id="modalDangKy">
+  <div class="modal">
+    <div class="modal-title">🏆 Đăng Ký Đá Giải</div>
+    <div>
+      <div class="modal-label">Tên giải đấu *</div>
+      <input type="text" id="tenGiai" placeholder="Nhập tên giải đấu...">
+    </div>
+    <div>
+      <div class="modal-label">Chọn cầu thủ tham gia</div>
+      <div style="display:flex;gap:8px;margin-bottom:8px">
+        <button onclick="chonTatCa(true)"  style="padding:4px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;color:var(--muted2);font-size:11px;cursor:pointer">Chọn tất cả</button>
+        <button onclick="chonTatCa(false)" style="padding:4px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;color:var(--muted2);font-size:11px;cursor:pointer">Bỏ chọn</button>
+      </div>
+      <div class="player-check-grid" id="playerCheckList"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeDangKy()">Huỷ</button>
+      <button class="btn-export" onclick="exportPDF()">📄 Đăng ký & Xuất PDF</button>
+    </div>
+  </div>
+</div>
+
 <!-- JS: thứ tự load quan trọng -->
 <script src="js/config.js"></script>
 <script src="js/parse.js"></script>
@@ -57,5 +82,6 @@
 <script src="js/render-lich-kq.js"></script>
 <script src="js/render-dong-quy.js"></script>
 <script src="js/render-thanh-vien.js"></script>
+<script src="js/dang-ky-giai.js"></script>
 </body>
 </html>
