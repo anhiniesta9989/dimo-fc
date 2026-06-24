@@ -66,7 +66,7 @@ function renderLichKQ(){
             <div class="mc-venue">
               <div class="mc-venue-row">
                 <span class="mc-gio">${t.gio ? '⏰ '+t.gio : '—'}</span>
-                <span class="mc-venue-san">🏟️ ${t.san}</span>
+                <span class="mc-venue-san"> <img src="/icon/svd.png" alt="Sân vận động" width=10%> ${t.san}</span>
                 <span class="mc-score-line" style="color:var(--muted2)">${t.doiThu ? 'vs '+t.doiThu : ''}</span>
               </div>
               <div class="mc-date">📅 ${t.ngay}</div>
@@ -89,7 +89,7 @@ function renderLichKQ(){
             <div class="mc-venue">
               <div class="mc-venue-row">
                 <span class="mc-gio">${t.gio ? '⏰ '+t.gio : '—'}</span>
-                <span class="mc-venue-san">🏟️ ${t.san}</span>
+                <span class="mc-venue-san"><img src="/icon/svd.png" alt="Sân vận động" width=10%> ${t.san}</span>
                 <span class="mc-score-line" style="color:var(--muted2)">${t.doiThu ? 'vs '+t.doiThu : ''}</span>
               </div>
               <div class="mc-date">📅 ${t.ngay}</div>
@@ -117,7 +117,7 @@ function renderLichKQ(){
             <div class="mc-venue">
               <div class="mc-venue-row">
                 <span class="mc-gio">${t.gio ? '⏰ '+t.gio : '—'}</span>
-                <span class="mc-venue-san">🏟️ ${t.san}</span>
+                <span class="mc-venue-san"><img src="/icon/svd.png" alt="Sân vận động" width=10%> ${t.san}</span>
                 <span class="mc-score-line">
                   <span class="mc-team-home">DIMO FC</span>
                   <span class="mc-score-ta ${taWin?'score-w':dichWin?'score-l':'score-d'}">${t.ta}</span>
