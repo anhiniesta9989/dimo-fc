@@ -163,7 +163,7 @@ async function buildPDF(tenGiai, players, logoImg, avatarImgs) {
   ctx.font = '12px Tahoma, sans-serif';
   ctx.fillText(`Người đại diện: ${CLUB_INFO.daiDien}`, M/DPI, y + 10);
   ctx.fillText(`SĐT: ${CLUB_INFO.sdt}`, M/DPI + 220, y + 10);
-  ctx.fillText(`Số cầu thủ đăng ký: ${players.length} người`, M/DPI, y + 24);
+  ctx.fillText(`Số cầu thủ đăng ký: ${players.length} người`, M/DPI, y + 30);
   y += 36;
 
   // Đường kẻ nhạt
