@@ -14,13 +14,17 @@ function renderThanhVien() {
     const initials = ((m.ho.trim().split(' ').pop()[0]||'') + (m.ten[0]||'')).toUpperCase();
     const isNghi = m.status.toLowerCase().includes('nghỉ');
     const tenFile = removeAccents(m.ten.replace(/\s+/g,''));
-    const avatarUrl = m.soAo
-      ? `https://raw.githubusercontent.com/anhiniesta9989/dimo-fc/main/avatars/${m.soAo}_${tenFile}.jpg`
+    const avatarBase = m.soAo
+      ? `https://raw.githubusercontent.com/anhiniesta9989/dimo-fc/main/avatars/${m.soAo}_${tenFile}`
       : null;
+    // Thử jpg trước, nếu lỗi thử png
+    const avatarUrl = avatarBase ? `${avatarBase}.jpg` : null;
+    const avatarFallback = avatarBase ? `${avatarBase}.png` : null;
     return `<div class="member-card ${isNghi?'nghi':''}">
       <div class="member-avatar">
         ${avatarUrl
-          ? `<img src="${avatarUrl}" alt="${m.ten}" onerror="this.style.display='none';this.parentElement.setAttribute('data-initials','${initials}')">`
+          ? `<img src="${avatarUrl}" alt="${m.ten}"
+               onerror="if(this.dataset.tried){this.style.display='none';this.parentElement.setAttribute('data-initials','${initials}')}else{this.dataset.tried=1;this.src='${avatarFallback}'}">`
           : initials}
       </div>
       <div class="member-so-ao">${m.soAo||'—'}</div>
@@ -42,4 +46,4 @@ function renderThanhVien() {
 
 // ─── BOOT ──────────────────────────────────────
 initYearTabs();
-renderAll();
+renderAll().then(() => applyHash());
