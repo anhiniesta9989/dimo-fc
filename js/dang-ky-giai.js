@@ -264,7 +264,7 @@ async function buildPDF(tenGiai, players, logoImg, avatarImgs) {
   ctx.strokeStyle = '#eeeeee';
   ctx.lineWidth = 1;
   ctx.beginPath(); ctx.moveTo(M/DPI, y); ctx.lineTo(W - M/DPI, y); ctx.stroke();
-  y += 10;
+  y += 22;
   ctx.fillStyle = '#aaaaaa';
   ctx.font = 'italic 10px Tahoma, sans-serif';
   ctx.textAlign = 'center';
