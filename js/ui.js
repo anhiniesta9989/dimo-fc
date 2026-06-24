@@ -41,12 +41,30 @@ function initYearTabs(){
 function switchYear(y){ currentYear=y; initYearTabs(); renderAll(); }
 
 // ─── PAGE SWITCH ───────────────────────────────
-function setPage(id,btn){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.page-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  btn && btn.classList.add('active');
+function setPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  else {
+    // Activate matching nav button without reference
+    document.querySelectorAll('.page-btn').forEach(b => {
+      if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + id + "'")) {
+        b.classList.add('active');
+      }
+    });
+  }
+  // Update URL hash
+  history.replaceState(null, '', '#' + id);
 }
+
+// ─── HASH ROUTING ──────────────────────────────
+function applyHash() {
+  const hash = location.hash.replace('#', '') || 'lich-kq';
+  const valid = ['lich-kq', 'thu-chi', 'dong-quy', 'thanh-vien'];
+  setPage(valid.includes(hash) ? hash : 'lich-kq');
+}
+window.addEventListener('hashchange', applyHash);
 
 // ─── MATCH TOGGLE ──────────────────────────────
 function toggleMatch(id){
@@ -68,7 +86,7 @@ function showLoading(pageId) {
 function showError(pageId, msg) {
   document.getElementById('page-'+pageId).innerHTML = `
     <div style="background:rgba(255,61,87,.08);border:1px solid rgba(255,61,87,.2);border-radius:12px;padding:24px;text-align:center;color:var(--red);margin-top:20px">
-      ⚠️ Không tải được dữ liệu từ Google Sheets.<br>
+      ⚠️ Không tải được dữ liệu.<br>
       <small style="color:var(--muted2)">${msg}</small><br><br>
       <small style="color:var(--muted2)">Đảm bảo file được chạy qua Live Server (không phải mở trực tiếp file://)</small><br><br>
       <button onclick="renderAll()" style="padding:8px 20px;background:var(--green);color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:600;margin-top:4px">Thử lại</button>
