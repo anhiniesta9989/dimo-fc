@@ -151,7 +151,7 @@ async function buildPDF(tenGiai, players, logoImg, avatarImgs) {
   ctx.strokeStyle = '#e67820';
   ctx.lineWidth = 2;
   ctx.beginPath(); ctx.moveTo(M/DPI, y); ctx.lineTo(W - M/DPI, y); ctx.stroke();
-  y += 12;
+  y += 22;
 
   // ── Tên giải ──
   ctx.fillStyle = '#111111';
@@ -170,12 +170,12 @@ async function buildPDF(tenGiai, players, logoImg, avatarImgs) {
   ctx.strokeStyle = '#dddddd';
   ctx.lineWidth = 1;
   ctx.beginPath(); ctx.moveTo(M/DPI, y); ctx.lineTo(W - M/DPI, y); ctx.stroke();
-  y += 10;
+  y += 22;
 
   // ── TIÊU ĐỀ DANH SÁCH ──
   ctx.fillStyle = '#111111';
   ctx.font = 'bold 13px Tahoma, sans-serif';
-  ctx.fillText('DANH SÁCH CẦU THỦ ĐĂNG KÝ', M/DPI, y);
+  ctx.fillText('DANH SÁCH CẦU THỦ THAM GIA', M/DPI, y);
   y += 10;
 
   // ── CARDS CẦU THỦ ──
