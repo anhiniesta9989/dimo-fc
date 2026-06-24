@@ -220,7 +220,7 @@ async function buildPDF(tenGiai, players, logoImg, avatarImgs) {
       const sw = avatarS / scale;
       const sh = avatarS / scale;
       const sx = (iw - sw) / 2;
-      const sy = (ih - sh) / 2;
+      const sy = (ih - sh) * 0.15; // crop từ trên, giữ khuôn mặt
       ctx.drawImage(img, sx, sy, sw, sh, ax, ay, avatarS, avatarS);
     } else {
       ctx.fillStyle = '#2a2a2a';
