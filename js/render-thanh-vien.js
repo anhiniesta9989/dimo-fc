@@ -13,8 +13,9 @@ function renderThanhVien() {
   function memberCard(m) {
     const initials = ((m.ho.trim().split(' ').pop()[0]||'') + (m.ten[0]||'')).toUpperCase();
     const isNghi = m.status.toLowerCase().includes('nghỉ');
+    const tenFile = removeAccents(m.ten.replace(/\s+/g,''));
     const avatarUrl = m.soAo
-      ? `https://raw.githubusercontent.com/anhiniesta9989/dimo-fc/main/avatars/${m.soAo}_${encodeURIComponent(m.ten.replace(/\s+/g,''))}.jpg`
+      ? `https://raw.githubusercontent.com/anhiniesta9989/dimo-fc/main/avatars/${m.soAo}_${tenFile}.jpg`
       : null;
     return `<div class="member-card ${isNghi?'nghi':''}">
       <div class="member-avatar">
