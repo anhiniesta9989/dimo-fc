@@ -156,7 +156,7 @@ async function buildPDF(tenGiai, players, logoImg, avatarImgs) {
   // ── Tên giải ──
   ctx.fillStyle = '#111111';
   ctx.font = 'bold 16px Tahoma, sans-serif';
-  ctx.fillText(`Đơn đăng ký: ${tenGiai}`, M/DPI, y);
+  ctx.fillText(`Đăng ký tham gia giải ${tenGiai}`, M/DPI, y);
   y += 10;
 
   ctx.fillStyle = '#555555';
