@@ -1281,3 +1281,132 @@ tbody tr:hover td {
   font-weight: 700;
   cursor: pointer
 }
+
+/* ══════════════════════════════════
+   AVATAR LIGHTBOX
+══════════════════════════════════ */
+.avatar-lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .88);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: lbFadeIn .22s ease
+}
+
+.avatar-lightbox.open {
+  display: flex
+}
+
+@keyframes lbFadeIn {
+  from {
+    opacity: 0
+  }
+
+  to {
+    opacity: 1
+  }
+}
+
+.avatar-lightbox-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  animation: lbSlideUp .25s cubic-bezier(.34, 1.56, .64, 1)
+}
+
+@keyframes lbSlideUp {
+  from {
+    opacity: 0;
+    transform: scale(.88) translateY(20px)
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0)
+  }
+}
+
+.avatar-lightbox-close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  color: var(--muted2);
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background .15s, color .15s, transform .15s;
+  z-index: 10
+}
+
+.avatar-lightbox-close:hover {
+  background: var(--bg4);
+  color: var(--text);
+  transform: scale(1.12)
+}
+
+.avatar-lightbox-img-wrap {
+  width: 600px;
+  height: 600px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid var(--border2);
+  background: var(--bg3);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .7), 0 0 0 1px rgba(255, 255, 255, .06);
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+
+@media (max-width: 480px) {
+  .avatar-lightbox-img-wrap {
+    width: 88vw;
+    height: 88vw
+  }
+}
+
+.avatar-lightbox-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block
+}
+
+.avatar-lightbox-info {
+  text-align: center
+}
+
+.avatar-lightbox-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: .5px
+}
+
+.avatar-lightbox-number {
+  font-size: 14px;
+  color: var(--green);
+  font-weight: 600;
+  margin-top: 4px
+}
+
+/* hover glow on avatar in member card */
+.member-avatar[onclick]:hover {
+  border-color: var(--green);
+  box-shadow: 0 0 18px rgba(0, 230, 118, .35);
+  transition: border-color .2s, box-shadow .2s
+}
